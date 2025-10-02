@@ -52,7 +52,7 @@ export default function ProjectUI() {
         <div className="pt-15 pb-5">
         <ProjectHeader />
         <div onClick={navigateToProject} className="h-[85vh] cursor-pointer overflow-hidden rounded-3xl">
-        <img src="https://framerusercontent.com/images/olve2bAWAxwoDja0aRzHGHqbfiY.png" alt="Makrformelle" className="w-full h-full object-cover" />
+        <img src="https://framerusercontent.com/images/TTy0vkv0zZmRHic7ThXKOrJsBY.png" alt="Makrformelle" className="w-full h-full object-cover" />
         </div>
         </div>
     </div>
