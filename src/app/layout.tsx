@@ -12,6 +12,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Azizjon Nigmatjonov",
   description: "Frontend Engineer",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180' },
+    ],
+  },
 };
 
 export default function RootLayout({

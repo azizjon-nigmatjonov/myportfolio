@@ -45,15 +45,17 @@ export default function ProjectUI() {
     }, []);
 
     const navigateToProject = () => {
-        router.push("/projects/makrformelle");
+        router.push("/project/makrformelle");
     }
 
-    return <div ref={containerRef} className="container">
+    return <div ref={containerRef}>
         <div className="pt-15 pb-5">
-        <ProjectHeader />
-        <div onClick={navigateToProject} className="h-[85vh] cursor-pointer overflow-hidden rounded-3xl">
-        <img src="https://framerusercontent.com/images/TTy0vkv0zZmRHic7ThXKOrJsBY.png" alt="Makrformelle" className="w-full h-full object-cover" />
-        </div>
+            <ProjectHeader />
+            <div className="container">
+            <div onClick={navigateToProject} className="mt-5 sm:mt-0 max-h-[85vh] cursor-pointer overflow-hidden rounded-3xl">
+                <img src="https://framerusercontent.com/images/TTy0vkv0zZmRHic7ThXKOrJsBY.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
+            </div>
+            </div>
         </div>
     </div>
 }
