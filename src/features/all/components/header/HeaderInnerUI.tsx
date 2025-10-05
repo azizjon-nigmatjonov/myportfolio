@@ -33,7 +33,7 @@ export default function HeaderInnerUI({ myInfo = {} }: { myInfo: MyInfo }) {
                     </div>
                     <div className="hidden sm:block"></div>
                     <div className="flex justify-end">
-                        <button onClick={handleNavigateHome} className="cursor-pointer w-12 h-12 rounded-full border-2 border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors duration-200">
+                        <button onClick={handleNavigateHome} className="cursor-pointer w-[40px] h-[40px] rounded-full border-2 border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors duration-200">
                             <CloseIcon />
                         </button>
                     </div>

@@ -4,10 +4,9 @@ import { useEffect } from 'react';
 import { useAuthStore } from '@/store/auth';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { fetchMyInfo, isLoading } = useAuthStore();
+  const { fetchMyInfo } = useAuthStore();
 
   useEffect(() => {
-    // Fetch user info when the app loads
     fetchMyInfo();
   }, [fetchMyInfo]);
 

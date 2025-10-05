@@ -1,8 +1,14 @@
+"use client";
 import ProblemStatement, { ProductionDetails } from "./components/Contents";
 import ProjectHeader from "./ProjectHeader";
 import IntroducingImage, { GridImages, NavigatingImages, ProductionImage } from "./components/Images";
+import { useRouter } from "next/navigation";
 
 export default function ProjectInnerUI() {
+    const router = useRouter();
+    const navigateToProject = () => {
+        router.push("/project/makrformelle");
+    }
     return <>
         <ProjectHeader />
         <IntroducingImage />
@@ -10,6 +16,6 @@ export default function ProjectInnerUI() {
         <ProductionImage />
         <ProductionDetails />
         <GridImages />
-        <NavigatingImages />
+        <NavigatingImages navigateToProject={navigateToProject} />
     </>
 }
