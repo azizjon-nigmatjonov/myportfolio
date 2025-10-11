@@ -3,13 +3,9 @@ import { useState } from "react";
 import NavBar from "./NavBar";
 import MenuUI from "./MenuUI";
 import { MenuIcon } from "@/assets/icons/List";
+import { MyInfo } from "@/types/auth";
 
-interface MyInfo {
-  name?: string;
-  profilePicture?: string;
-}
-
-export default function HeaderUI({ myInfo = {} }: { myInfo: MyInfo }) {
+export default function HeaderUI({ myInfo = {} as MyInfo }: { myInfo: MyInfo }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { name, profilePicture } = myInfo;
 
@@ -42,9 +38,9 @@ export default function HeaderUI({ myInfo = {} }: { myInfo: MyInfo }) {
             <h1>{name}</h1>
           </div>
           <div>
-            <p>Tashkent <br /> Frontend Developer</p>
+            <p>Tashkent <br /> Software Engineer</p>
           </div>
-          <NavBar />
+          <NavBar myInfo={myInfo || {} as MyInfo} />
           <div className="flex justify-end">
             {profilePicture && <img src={profilePicture} alt="avatar" width={40} height={40} className="w-[40px] h-[40px] rounded-full object-cover" />}
           </div>

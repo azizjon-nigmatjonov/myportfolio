@@ -3,11 +3,12 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Portfolio } from "@/types/portfolio";
 
 // Register the ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-export default function IntroducingImage() {
+export default function IntroducingImage({ portfolio }: { portfolio: Portfolio }) {
     const imageRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -45,8 +46,8 @@ export default function IntroducingImage() {
                 className="w-full h-full"
             >
                 <img 
-                    src="https://framerusercontent.com/images/TTy0vkv0zZmRHic7ThXKOrJsBY.png" 
-                    alt="Makrformelle" 
+                    src={portfolio.showing_inner_image_url || portfolio.showing_image_url || ''} 
+                    alt={portfolio.title} 
                     className="w-full h-full object-cover object-top" 
                 />
             </div>
@@ -54,37 +55,41 @@ export default function IntroducingImage() {
     );
 }
 
-export function ProductionImage() {
+export function ProductionImage({ portfolio }: { portfolio: Portfolio }) {
     return <div className="container">
         <div className="max-h-[85vh] overflow-hidden rounded-3xl">
-            <img src="https://framerusercontent.com/images/D40RTJ3biUaNajstvRX5TZjK6g.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
+            <img src={portfolio.production_image_url_1 || portfolio.problem_image_url || ''} alt={portfolio.title} className="w-full h-full object-cover object-center" />
         </div>
     </div>
 }
-export function GridImages() {
+export function GridImages({ portfolio }: { portfolio: Portfolio }) {
+    const images = [
+        portfolio.production_image_url_1,
+        portfolio.production_image_url_2,
+        portfolio.production_image_url_3,
+        portfolio.production_image_url_4,
+    ].filter(Boolean); // Filter out empty strings
+
+    if (images.length === 0) {
+        return null; // Don't render if no images
+    }
+
     return <div className="container">
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
-            <div className="max-h-[60vh] overflow-hidden rounded-3xl">
-                <img src="https://framerusercontent.com/images/D40RTJ3biUaNajstvRX5TZjK6g.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
-            </div>
-            <div className="max-h-[60vh] overflow-hidden rounded-3xl">
-                <img src="https://framerusercontent.com/images/D40RTJ3biUaNajstvRX5TZjK6g.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
-            </div>
-            <div className="max-h-[60vh] overflow-hidden rounded-3xl">
-                <img src="https://framerusercontent.com/images/D40RTJ3biUaNajstvRX5TZjK6g.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
-            </div>
-            <div className="max-h-[60vh] overflow-hidden rounded-3xl">
-                <img src="https://framerusercontent.com/images/D40RTJ3biUaNajstvRX5TZjK6g.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
-            </div>
+            {images.map((image, index) => (
+                <div key={index} className="max-h-[60vh] overflow-hidden rounded-3xl">
+                    <img src={image} alt={`${portfolio.title} ${index + 1}`} className="w-full h-full object-cover object-center" />
+                </div>
+            ))}
         </div>
     </div>
 }
 
-export function NavigatingImages({ navigateToProject = () => {} }: { navigateToProject: () => void }) {
+export function NavigatingImages({ navigateToProject = () => {}, portfolio }: { navigateToProject: () => void, portfolio: Portfolio }) {
     return <div className="container">
         <div className="py-20">
             <div className="max-h-[85vh] overflow-hidden rounded-3xl relative">
-                <img src="https://framerusercontent.com/images/D40RTJ3biUaNajstvRX5TZjK6g.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
+                <img src={portfolio.next_project_image_url || portfolio.showing_image_url || ''} alt={portfolio.title} className="w-full h-full object-cover object-center" />
                 <div className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                     <div onClick={navigateToProject} className="cursor-pointer relative w-full h-full">
                         {/* Black circle background */}

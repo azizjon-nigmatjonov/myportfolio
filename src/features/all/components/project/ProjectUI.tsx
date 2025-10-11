@@ -5,14 +5,16 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Portfolio } from "@/types/portfolio";
+import { usePortfoliosStore } from "@/store/portfolios";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ProjectUI() {
+export default function ProjectUI({ portfolio = {} as Portfolio }: { portfolio: Portfolio }) {
     const router = useRouter();
     const containerRef = useRef<HTMLDivElement>(null);
-
+    const { setPortfolio } = usePortfoliosStore();
     useEffect(() => {
         if (!containerRef.current) return;
 
@@ -45,15 +47,16 @@ export default function ProjectUI() {
     }, []);
 
     const navigateToProject = () => {
-        router.push("/project/makrformelle");
+        router.push(`/project/${portfolio.id}`);
+        setPortfolio(portfolio);
     }
 
     return <div ref={containerRef}>
         <div className="pt-15 pb-5">
-            <ProjectHeader />
+            <ProjectHeader portfolio={portfolio} />
             <div className="container">
             <div onClick={navigateToProject} className="mt-5 sm:mt-0 max-h-[85vh] cursor-pointer overflow-hidden rounded-3xl">
-                <img src="https://framerusercontent.com/images/TTy0vkv0zZmRHic7ThXKOrJsBY.png" alt="Makrformelle" className="w-full h-full object-cover object-center" />
+                <img src={portfolio.showing_image_url || 'nothing'} alt={portfolio.title} className="w-full h-full object-cover object-center" />
             </div>
             </div>
         </div>
