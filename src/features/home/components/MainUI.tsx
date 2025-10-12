@@ -9,7 +9,7 @@ export default function MainUI({ myInfo = {} as MyInfo }: { myInfo: MyInfo }) {
                 {myInfo.work_experience}
             </div>
             <div className="col-span-2">
-                <h1 className="text-[30px] sm:text-[40px] font-semibold leading-[34px] sm:leading-[44px]">{myInfo.about_me}</h1>
+                <h1 className="text-[30px] sm:text-[40px] font-semibold leading-[34px] sm:leading-[44px] lg:w-[80%]">{myInfo.about_me}</h1>
             </div>
         </div>
     </div>
