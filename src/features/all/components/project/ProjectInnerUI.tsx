@@ -5,11 +5,12 @@ import IntroducingImage, { GridImages, NavigatingImages, ProductionImage } from 
 import { useRouter } from "next/navigation";
 import { Portfolio } from "@/types/portfolio";
 
-export default function ProjectInnerUI({ portfolio }: { portfolio: Portfolio }) {
+export default function ProjectInnerUI({ portfolio, nextProjectData }: { portfolio: Portfolio, nextProjectData: Portfolio }) {
     const router = useRouter();
-    const navigateToProject = () => {
-        router.push(`/project/${portfolio.id}`);
+    const navigateToProject = (id: string) => {
+        router.push(`/project/${id}`);
     }
+    
     return <>
         <ProjectHeader portfolio={portfolio} />
         <IntroducingImage portfolio={portfolio} />
@@ -17,6 +18,6 @@ export default function ProjectInnerUI({ portfolio }: { portfolio: Portfolio }) 
         <ProductionImage portfolio={portfolio} />
         <ProductionDetails portfolio={portfolio} />
         <GridImages portfolio={portfolio} />
-        <NavigatingImages navigateToProject={navigateToProject} portfolio={portfolio} />
+        <NavigatingImages navigateToProject={navigateToProject} portfolio={nextProjectData} />
     </>
 }

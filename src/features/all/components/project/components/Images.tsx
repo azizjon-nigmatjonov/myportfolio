@@ -85,13 +85,13 @@ export function GridImages({ portfolio }: { portfolio: Portfolio }) {
     </div>
 }
 
-export function NavigatingImages({ navigateToProject = () => {}, portfolio }: { navigateToProject: () => void, portfolio: Portfolio }) {
+export function NavigatingImages({ navigateToProject = () => {}, portfolio = {} as Portfolio }: { navigateToProject: (id: string) => void, portfolio: Portfolio }) {
     return <div className="container">
         <div className="py-20">
-            <div className="max-h-[85vh] overflow-hidden rounded-3xl relative">
-                <img src={portfolio.next_project_image_url || portfolio.showing_image_url || ''} alt={portfolio.title} className="w-full h-full object-cover object-center" />
+            <div className="max-h-[85vh] min-h-[85vh] overflow-hidden rounded-3xl relative">
+                <img src={portfolio.showing_image_url || portfolio.title} alt={portfolio.title} className="w-full h-full object-cover object-center" />
                 <div className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div onClick={navigateToProject} className="cursor-pointer relative w-full h-full">
+                    <div onClick={() => navigateToProject(portfolio.id)} className="cursor-pointer relative w-full h-full">
                         {/* Black circle background */}
                         <div className="absolute inset-0 bg-black rounded-full"></div>
                         

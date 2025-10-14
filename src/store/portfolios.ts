@@ -6,7 +6,7 @@ import apiClient from '@/lib/api';
 interface PortfoliosStore extends PortfolioState {
   // Single portfolio state
   portfolio: Portfolio | null;
-  
+
   // Actions
   setPortfolios: (portfolios: Portfolio[]) => void;
   setPortfolio: (portfolio: Portfolio) => void;
@@ -78,8 +78,9 @@ export const usePortfoliosStore = create<PortfoliosStore>()(
       },
 
       fetchPortfolioById: async (id: string) => {
-        const { setLoading, setError, setPortfolio } = get();
-        
+        const { setLoading, setError, setPortfolio, portfolios } = get();
+        const portfolio = portfolios.find((portfolio) => portfolio.id === id);
+        setPortfolio(portfolio || {} as Portfolio);
         try {
           setLoading(true);
           setError(null);
@@ -87,6 +88,8 @@ export const usePortfoliosStore = create<PortfoliosStore>()(
           const portfolio = await fetchPortfolioByIdFromAPI(id);
           setPortfolio(portfolio);
         } catch (error) {
+          const portfolio = portfolios.find((portfolio) => portfolio.id === id);
+          setPortfolio(portfolio || {} as Portfolio);
           const errorMessage = error instanceof Error ? error.message : 'Failed to fetch portfolio';
           setError(errorMessage);
           console.error('Error fetching portfolio:', error);
