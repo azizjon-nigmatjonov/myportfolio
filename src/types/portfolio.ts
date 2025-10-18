@@ -1,5 +1,6 @@
 export interface Portfolio {
   _id: string;
+  url: string;
   slug: string;
   title: string;
   description: string;
