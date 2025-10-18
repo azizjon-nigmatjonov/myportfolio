@@ -10,7 +10,7 @@ interface MyInfo {
     profilePicture?: string;
 }
 
-export default function HeaderInnerUI({ myInfo = {}, url }: { myInfo: MyInfo, url: string }) {
+export default function HeaderInnerUI({ myInfo = {}, url = '' }: { myInfo: MyInfo, url: string }) {
 
     const router = useRouter();
     const { name } = myInfo;
@@ -27,10 +27,12 @@ export default function HeaderInnerUI({ myInfo = {}, url }: { myInfo: MyInfo, ur
                     <div onClick={handleNavigateHome}>
                         <h1>{name}</h1>
                     </div>
-                    <div className="gap-x-2 hidden sm:flex">
-                        <Link href={url || 'undefined'}>Laung Project</Link>
-                        <ArrowRightIcon className="rotate-[-45deg]" />
-                    </div>
+                    {url ? (
+                        <div className="gap-x-2 flex">
+                            <Link href={url} target="_blank">Laung Project</Link>
+                            <ArrowRightIcon className="rotate-[-45deg]" />
+                        </div>
+                    ) : <div></div>}
                     <div className="hidden sm:block"></div>
                     <div className="flex justify-end">
                         <button onClick={handleNavigateHome} className="cursor-pointer w-[40px] h-[40px] rounded-full border-2 border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors duration-200">

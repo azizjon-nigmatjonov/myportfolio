@@ -46,7 +46,7 @@ export default function IntroducingImage({ portfolio }: { portfolio: Portfolio }
                 className="w-full h-full"
             >
                 <img 
-                    src={portfolio.showing_inner_image_url || portfolio.showing_image_url || ''} 
+                    src={portfolio.showing_inner_image_url || portfolio.showing_image_url || 'something'} 
                     alt={portfolio.title} 
                     className="w-full h-full object-cover object-top" 
                 />
@@ -58,7 +58,7 @@ export default function IntroducingImage({ portfolio }: { portfolio: Portfolio }
 export function ProductionImage({ portfolio }: { portfolio: Portfolio }) {
     return <div className="container">
         <div className="max-h-[85vh] overflow-hidden rounded-3xl">
-            <img src={portfolio.problem_image_url || portfolio.problem_image_url || ''} alt={portfolio.title} className="w-full h-full object-cover object-center" />
+            <img src={portfolio.problem_image_url || portfolio.problem_image_url || 'something'} alt={portfolio.title} className="w-full h-full object-cover object-center" />
         </div>
     </div>
 }

@@ -37,7 +37,7 @@ export default function ProjectPage() {
     }
     
     return <div>
-        <HeaderInnerUI myInfo={myInfo || {}} url={portfolio.url || 'undefined'} />
+        <HeaderInnerUI myInfo={myInfo || {}} url={portfolio?.url || ''} />
         <ProjectInnerUI portfolio={portfolio} nextProjectData={nextProjectData} />
         <FooterUI myInfo={myInfo || {} as MyInfo} />
     </div>
