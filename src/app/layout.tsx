@@ -12,6 +12,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Azizjon Nigmatjonov",
   description: "Frontend Engineer",
+  openGraph: {
+    images: ['/me.jpeg'],
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },

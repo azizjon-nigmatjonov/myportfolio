@@ -57,6 +57,9 @@ export const useAuthStore = create<AuthStore>()(
           const errorMessage = error instanceof Error ? error.message : 'Failed to fetch user info';
           setError(errorMessage);
           console.error('Error fetching myInfo:', error);
+          if (!sessionStorage.getItem('entered')) {
+            sessionStorage.setItem('entered', 'true');
+          }
         } finally {
           setLoading(false);
         }
