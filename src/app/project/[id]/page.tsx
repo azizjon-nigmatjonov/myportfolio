@@ -22,7 +22,7 @@ export default function ProjectPage() {
             const index = portfolios.findIndex((portfolio) => portfolio.id === id) + 1
             setNextProjectData(portfolios[index === portfolios.length ? 0 : index]);
         }
-    }, [id, fetchPortfolioById]);
+    }, [id, fetchPortfolioById, portfolios]);
     
     if (isLoading) {
         return <div>Loading...</div>;

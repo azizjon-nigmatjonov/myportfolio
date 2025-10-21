@@ -67,7 +67,9 @@ export const usePortfoliosStore = create<PortfoliosStore>()(
           setError(null);
           
           const portfolios = await fetchPortfoliosFromAPI();
-          setPortfolios(portfolios);
+          if (portfolios.length > 0) {
+            setPortfolios(portfolios);
+          }
         } catch (error) {
           const errorMessage = error instanceof Error ? error.message : 'Failed to fetch portfolios';
           setError(errorMessage);
