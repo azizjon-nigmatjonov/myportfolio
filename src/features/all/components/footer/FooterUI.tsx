@@ -17,7 +17,7 @@ export default function FooterUI({ myInfo = {} as MyInfo }: { myInfo: MyInfo }) 
     const formattedPhone = formatPhoneNumber(myInfo.phone);
 
     return <div className="lg:fixed bottom-0 left-0 w-full py-5">
-        <div className="container flex justify-between">
+        <div className="container flex justify-between lg:flex-row flex-col gap-y-3 lg:gap-y-0">
             <Link href={`tel:${myInfo.phone}`}>+{formattedPhone}</Link>
             <Link href={`mailto:${myInfo.email}`}>{myInfo.email}</Link>
         </div>
