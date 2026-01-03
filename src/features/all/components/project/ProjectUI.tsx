@@ -55,7 +55,7 @@ export default function ProjectUI({ portfolio = {} as Portfolio }: { portfolio: 
         <div className="pt-15 pb-5">
             <ProjectHeader portfolio={portfolio} />
             <div className="container">
-            <div onClick={navigateToProject} className="mt-5 sm:mt-0 max-h-[85vh] cursor-pointer overflow-hidden rounded-3xl">
+            <div onClick={navigateToProject} className="mt-5 sm:mt-0 max-h-[85vh] flex items-center cursor-pointer overflow-hidden rounded-3xl">
                 <img src={portfolio.showing_image_url || 'nothing'} alt={portfolio.title} className="w-full h-full object-cover object-center" />
             </div>
             </div>

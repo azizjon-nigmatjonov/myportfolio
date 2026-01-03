@@ -71,8 +71,8 @@ export const usePortfoliosStore = create<PortfoliosStore>()(
             setPortfolios(portfolios);
           }
         } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : 'Failed to fetch portfolios';
-          setError(errorMessage);
+          // const errorMessage = error instanceof Error ? error.message : 'Failed to fetch portfolios';
+          // setError(errorMessage);
           console.error('Error fetching portfolios:', error);
         } finally {
           setLoading(false);
@@ -90,10 +90,10 @@ export const usePortfoliosStore = create<PortfoliosStore>()(
           const portfolio = await fetchPortfolioByIdFromAPI(id);
           setPortfolio(portfolio);
         } catch (error) {
-          const portfolio = portfolios.find((portfolio) => portfolio.id === id);
-          setPortfolio(portfolio || {} as Portfolio);
-          const errorMessage = error instanceof Error ? error.message : 'Failed to fetch portfolio';
-          setError(errorMessage);
+          // const portfolio = portfolios.find((portfolio) => portfolio.id === id);
+          // setPortfolio(portfolio || {} as Portfolio);
+          // const errorMessage = error instanceof Error ? error.message : 'Failed to fetch portfolio';
+          // setError(errorMessage);
           console.error('Error fetching portfolio:', error);
         } finally {
           setLoading(false);
