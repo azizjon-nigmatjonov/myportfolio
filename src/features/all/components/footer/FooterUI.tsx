@@ -4,6 +4,7 @@ import Link from "next/link";
 
 export default function FooterUI({ myInfo = {} as MyInfo }: { myInfo: MyInfo }) {
     const formatPhoneNumber = (phone: string): string => {
+        if (!phone) return '';
         // Remove any non-digit characters
         const digits = phone.replace(/\D/g, '');
         // Format as XXX XX XXX XX XX (3-2-3-2-2)
