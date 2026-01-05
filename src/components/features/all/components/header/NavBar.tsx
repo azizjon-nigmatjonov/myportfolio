@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ArrowRightIcon } from "../../../../assets/icons/List";
+import { ArrowRightIcon } from "@/assets/icons/List";
 import { MyInfo } from "@/types/auth";
 
 export default function NavBar({ myInfo = {} as MyInfo }: { myInfo: MyInfo }) {

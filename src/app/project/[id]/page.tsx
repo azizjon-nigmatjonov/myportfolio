@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import HeaderInnerUI from "@/features/all/components/header/HeaderInnerUI"
+import HeaderInnerUI from "@/components/features/all/components/header/HeaderInnerUI"
 import { useMyInfo } from "@/store/auth";
-import ProjectInnerUI from "@/features/all/components/project/ProjectInnerUI";
-import FooterUI from "@/features/all/components/footer/FooterUI";
+import ProjectInnerUI from "@/components/features/all/components/project/ProjectInnerUI";
+import FooterUI from "@/components/features/all/components/footer/FooterUI";
 import { MyInfo } from "@/types/auth";
 import { useParams } from "next/navigation";
 import { usePortfoliosStore } from "@/store/portfolios";

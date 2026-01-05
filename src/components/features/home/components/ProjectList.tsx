@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import ProjectUI from "@/features/all/components/project/ProjectUI";
+import ProjectUI from "@/components/features/all/components/project/ProjectUI";
 import { usePortfoliosStore } from "@/store/portfolios";
 
 export default function ProjectList() {

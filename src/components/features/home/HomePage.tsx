@@ -1,5 +1,5 @@
 "use client";
-import HeaderUI from "@/features/all/components/header/HeaderUI";
+import HeaderUI from "@/components/features/all/components/header/HeaderUI";
 import MainUI from "./components/MainUI";
 import { useMyInfo } from "@/store/auth";
 import ProjectList from "./components/ProjectList";
