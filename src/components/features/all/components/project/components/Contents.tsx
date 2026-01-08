@@ -6,7 +6,7 @@ export default function ProblemStatement({ portfolio }: { portfolio: Portfolio }
     return <div className="container">
         <div className="py-20">
             <h3 className="pb-8 text-3xl font-semibold">Problem</h3>
-            <p className="sm:text-[16px]">{portfolio.problem_statement}</p>
+            {portfolio.problem_statement?.split('\n').filter((line) => line.trim()).map((line, index) => <p className="sm:text-[16px]" key={index}>{line.replace(/^\d+\)\s*/, '')}<br /></p>)}
         </div>
     </div>
 }
