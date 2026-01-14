@@ -19,6 +19,10 @@ interface ExperienceSchemaProps {
   data: ExperienceData;
 }
 
+interface PortfolioCollectionSchemaProps {
+  portfolios: Portfolio[];
+}
+
 export function PersonSchema({ person }: PersonSchemaProps) {
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -202,6 +206,50 @@ export function ExperienceSchema({ data }: ExperienceSchemaProps) {
       sameAs,
     };
   }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function PortfolioCollectionSchema({ portfolios }: PortfolioCollectionSchemaProps) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Portfolio Projects - Azizjon Nigmatjonov",
+    description: "A collection of web development projects and portfolio works by Azizjon Nigmatjonov, Frontend Engineer",
+    url: getCanonicalUrl(),
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: portfolios.length,
+      itemListElement: portfolios.map((portfolio, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "CreativeWork",
+          "@id": getCanonicalUrl(`/project/${portfolio.id}`),
+          name: portfolio.title,
+          description: portfolio.description || portfolio.intro_statment,
+          image: portfolio.showing_image_url ? normalizeImageUrl(portfolio.showing_image_url) : undefined,
+          url: getCanonicalUrl(`/project/${portfolio.id}`),
+          author: {
+            "@type": "Person",
+            name: "Azizjon Nigmatjonov",
+          },
+          datePublished: portfolio.release_date || portfolio.created_date,
+          dateModified: portfolio.updated_at || portfolio.created_at,
+          keywords: [...(portfolio.tags || []), ...(portfolio.stack || [])].join(", "),
+          about: portfolio.category ? {
+            "@type": "Thing",
+            name: portfolio.category,
+          } : undefined,
+        },
+      })),
+    },
+  };
 
   return (
     <script
