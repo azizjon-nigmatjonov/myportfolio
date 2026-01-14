@@ -31,6 +31,7 @@ const AboutMeSection = memo(function AboutMeSection({ data }: AboutMeSectionProp
                   className="object-cover"
                   sizes="(max-width: 640px) 100vw, 256px"
                   priority
+                  unoptimized={data.image.startsWith('http') && !data.image.includes('i.ibb.co')}
                 />
               </div>
             )}
