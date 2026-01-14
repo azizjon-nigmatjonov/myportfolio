@@ -117,8 +117,7 @@ export async function fetchContacts(): Promise<ContactApiResponse[]> {
 
   try {
     const response = await fetch(`${API_BASE_URL}/contacts`, {
-      next: { revalidate: 300 }, // Revalidate every minute for contacts (more frequent updates)
-      cache: 'no-store', // Disable caching for contacts to show latest data
+      next: { revalidate: 300 }, // Revalidate every 5 minutes for contacts (more frequent updates)
     });
 
     if (!response.ok) {

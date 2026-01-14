@@ -40,7 +40,7 @@ export default function MenuUI({ onClose, profilePicture }: MenuUIProps) {
           onClick={onClose}
           className="w-12 h-12 rounded-full border-2 border-gray-600 flex items-center justify-center hover:bg-white hover:text-black transition-colors duration-200"
         >
-          <CloseIcon/>
+          <CloseIcon fill="white" />
         </button>
       </div>
 
@@ -88,7 +88,7 @@ export default function MenuUI({ onClose, profilePicture }: MenuUIProps) {
 
       {/* Footer */}
       <div className="p-6">
-        <p className="text-white text-sm">© 2025</p>
+        <p className="text-white text-sm">© 2026</p>
       </div>
     </div>
   );
