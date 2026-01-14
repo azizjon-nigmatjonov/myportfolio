@@ -24,8 +24,12 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id } = await params;
-  const portfolio = await fetchPortfolioById(id);
-  const portfolios = await fetchPortfolios();
+  
+  // Fetch portfolio and portfolios list in parallel for better performance
+  const [portfolio, portfolios] = await Promise.all([
+    fetchPortfolioById(id),
+    fetchPortfolios(),
+  ]);
 
   if (!portfolio) {
     notFound();

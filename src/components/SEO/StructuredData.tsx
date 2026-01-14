@@ -64,21 +64,28 @@ export function ArticleSchema({ article }: ArticleSchemaProps) {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     name: article.title,
-    description: article.description,
+    description: article.description || article.intro_statment || "",
     url: getCanonicalUrl(`/project/${article.id}`),
     author: {
       "@type": "Person",
       name: "Azizjon Nigmatjonov",
+      jobTitle: "Frontend Engineer",
     },
   };
 
-  const images = [
-    normalizeImageUrl(article.showing_image_url),
-    normalizeImageUrl(article.showing_inner_image_url),
-  ].filter(Boolean);
+  // Collect all available images
+  const allImages = [
+    article.showing_image_url,
+    article.showing_inner_image_url,
+    article.problem_image_url,
+    article.production_image_url_1,
+    article.production_image_url_2,
+    article.production_image_url_3,
+    article.production_image_url_4,
+  ].filter(Boolean).map(img => normalizeImageUrl(img));
   
-  if (images.length > 0) {
-    schema.image = images;
+  if (allImages.length > 0) {
+    schema.image = allImages;
   }
   
   if (article.release_date || article.created_date) {
@@ -99,6 +106,23 @@ export function ArticleSchema({ article }: ArticleSchemaProps) {
       "@type": "Thing",
       name: article.category,
     };
+  }
+
+  // Add additional properties
+  if (article.url) {
+    schema.codeRepository = article.url;
+  }
+
+  if (article.stack && article.stack.length > 0) {
+    schema.applicationCategory = "WebApplication";
+    schema.softwareHelp = article.stack.map(tech => ({
+      "@type": "SoftwareApplication",
+      name: tech,
+    }));
+  }
+
+  if (article.problem_statement) {
+    schema.text = article.problem_statement;
   }
 
   return (
