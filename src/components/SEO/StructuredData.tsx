@@ -29,7 +29,7 @@ export function PersonSchema({ person }: PersonSchemaProps) {
     "@type": "Person",
     name: person.name || "Azizjon Nigmatjonov",
     jobTitle: "Frontend Engineer",
-    description: person.about_me || "Frontend Engineer",
+    description: person.about_me || "Frontend Developer with 4+ years of professional experience, specializing in React, TypeScript, React Native, Vue.js and Node.js ecosystems.",
     image: normalizeImageUrl(person.profilePicture),
     url: getCanonicalUrl(),
   };
