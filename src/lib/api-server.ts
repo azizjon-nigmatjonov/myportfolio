@@ -1,5 +1,11 @@
 import { Portfolio } from "@/types/portfolio";
 import { MyInfo } from "@/types/auth";
+import { 
+  AboutMeApiResponse, 
+  ContactApiResponse, 
+  ExperienceApiResponse, 
+  SkillApiResponse 
+} from "@/types/experience";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -71,5 +77,100 @@ export async function fetchMyInfo(): Promise<MyInfo | null> {
   } catch (error) {
     console.error("Error fetching user info:", error);
     return null;
+  }
+}
+
+/**
+ * Experience API functions
+ */
+
+export async function fetchAboutMe(): Promise<AboutMeApiResponse | null> {
+  if (!API_BASE_URL) {
+    console.warn("NEXT_PUBLIC_API_BASE_URL is not set");
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/about-me`, {
+      next: { revalidate: 3600 }, // Revalidate every hour
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null;
+      }
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching about me:", error);
+    return null;
+  }
+}
+
+export async function fetchContacts(): Promise<ContactApiResponse[]> {
+  if (!API_BASE_URL) {
+    console.warn("NEXT_PUBLIC_API_BASE_URL is not set");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/contacts`, {
+      next: { revalidate: 3600 }, // Revalidate every hour
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    return [];
+  }
+}
+
+export async function fetchExperiences(): Promise<ExperienceApiResponse[]> {
+  if (!API_BASE_URL) {
+    console.warn("NEXT_PUBLIC_API_BASE_URL is not set");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/experiences`, {
+      next: { revalidate: 3600 }, // Revalidate every hour
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching experiences:", error);
+    return [];
+  }
+}
+
+export async function fetchSkills(): Promise<SkillApiResponse[]> {
+  if (!API_BASE_URL) {
+    console.warn("NEXT_PUBLIC_API_BASE_URL is not set");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/skills`, {
+      next: { revalidate: 3600 }, // Revalidate every hour
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+    return [];
   }
 }

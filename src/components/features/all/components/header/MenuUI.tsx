@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { ArrowRightIcon, CloseIcon } from "@/assets/icons/List";
 
 interface MenuUIProps {
@@ -8,6 +9,7 @@ interface MenuUIProps {
 
 export default function MenuUI({ onClose, profilePicture }: MenuUIProps) {
   const menuItems = [
+    { name: "Experience", href: "/experience", icon: "💼" },
     { name: "Telegram", href: "https://t.me/aziz_nodirovich", icon: "📱" },
     { name: "Linkedin", href: "https://linkedin.com/in/azizjon-nigmatjonov", icon: "💼" },
     { name: "Read.cv", href: "https://drive.google.com/file/d/1gZJRIGk0xwWJl1WBkiYd34Hcj_C_zmfp/view?usp=drive_link", icon: "📄" },
@@ -44,22 +46,44 @@ export default function MenuUI({ onClose, profilePicture }: MenuUIProps) {
 
       {/* Menu Items */}
       <div className="flex-1 flex flex-col items-center justify-center space-y-8 px-6">
-        {menuItems.map((item, index) => (
-          <a
-            key={index}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-4 text-white hover:text-gray-300 transition-colors duration-200 group"
-          >
-            <span className="text-2xl">{item.icon}</span>
-            <span className="text-2xl font-medium">{item.name}</span>
-            <ArrowRightIcon 
-              fill="white" 
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" 
-            />
-          </a>
-        ))}
+        {menuItems.map((item, index) => {
+          const isExternal = item.href.startsWith("http") || item.href.startsWith("mailto:");
+          const MenuItemContent = (
+            <>
+              <span className="text-2xl">{item.icon}</span>
+              <span className="text-2xl font-medium">{item.name}</span>
+              <ArrowRightIcon 
+                fill="white" 
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" 
+              />
+            </>
+          );
+
+          if (isExternal) {
+            return (
+              <a
+                key={index}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-4 text-white hover:text-gray-300 transition-colors duration-200 group"
+              >
+                {MenuItemContent}
+              </a>
+            );
+          }
+
+          return (
+            <Link
+              key={index}
+              href={item.href}
+              onClick={onClose}
+              className="flex items-center space-x-4 text-white hover:text-gray-300 transition-colors duration-200 group"
+            >
+              {MenuItemContent}
+            </Link>
+          );
+        })}
       </div>
 
       {/* Footer */}

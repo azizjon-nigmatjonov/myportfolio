@@ -1,5 +1,6 @@
 import { Portfolio } from "@/types/portfolio";
 import { MyInfo } from "@/types/auth";
+import { ExperienceData } from "@/types/experience";
 import { getCanonicalUrl, normalizeImageUrl } from "@/lib/seo";
 
 interface PersonSchemaProps {
@@ -12,6 +13,10 @@ interface ArticleSchemaProps {
 
 interface BreadcrumbSchemaProps {
   items: Array<{ name: string; url: string }>;
+}
+
+interface ExperienceSchemaProps {
+  data: ExperienceData;
 }
 
 export function PersonSchema({ person }: PersonSchemaProps) {
@@ -111,6 +116,92 @@ export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
       item: getCanonicalUrl(item.url),
     })),
   };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function ExperienceSchema({ data }: ExperienceSchemaProps) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    name: "Experience & Skills - Azizjon Nigmatjonov",
+    description: data.aboutMe.content,
+    url: getCanonicalUrl("/experience"),
+    mainEntity: {
+      "@type": "Person",
+      name: "Azizjon Nigmatjonov",
+      jobTitle: "Frontend Engineer",
+      description: data.aboutMe.content,
+      image: data.aboutMe.image ? normalizeImageUrl(data.aboutMe.image) : undefined,
+      knowsAbout: data.skills.map((skill) => ({
+        "@type": "Thing",
+        name: skill.name,
+      })),
+      alumniOf: data.experiences.map((exp) => ({
+        "@type": "Organization",
+        name: exp.company,
+      })),
+    },
+  };
+
+  // Add work experience
+  if (data.experiences.length > 0) {
+    schema.mainEntity = {
+      ...(schema.mainEntity as Record<string, unknown>),
+      worksFor: data.experiences
+        .filter((exp) => !exp.endDate)
+        .map((exp) => ({
+          "@type": "Organization",
+          name: exp.company,
+        })),
+      hasOccupation: data.experiences.map((exp) => ({
+        "@type": "Occupation",
+        name: exp.position,
+        occupationLocation: {
+          "@type": "City",
+          name: exp.location,
+        },
+        worksFor: {
+          "@type": "Organization",
+          name: exp.company,
+        },
+      })),
+    };
+  }
+
+  // Add contact information
+  const emailContact = data.contacts.find((c) => c.type === "email");
+  const phoneContact = data.contacts.find((c) => c.type === "phone");
+  const sameAs = data.contacts
+    .filter((c) => c.type === "github" || c.type === "linkedin")
+    .map((c) => c.url)
+    .filter(Boolean) as string[];
+
+  if (emailContact?.value) {
+    schema.mainEntity = {
+      ...(schema.mainEntity as Record<string, unknown>),
+      email: emailContact.value,
+    };
+  }
+
+  if (phoneContact?.value) {
+    schema.mainEntity = {
+      ...(schema.mainEntity as Record<string, unknown>),
+      telephone: phoneContact.value,
+    };
+  }
+
+  if (sameAs.length > 0) {
+    schema.mainEntity = {
+      ...(schema.mainEntity as Record<string, unknown>),
+      sameAs,
+    };
+  }
 
   return (
     <script
