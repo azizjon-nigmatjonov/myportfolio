@@ -12,7 +12,6 @@ import { transformExperienceData } from "@/lib/transformers/experience";
 import { mockExperienceData } from "@/lib/mock-data/experience";
 
 export async function generateMetadata(): Promise<Metadata> {
-  // Fetch data for metadata
   const [aboutMe, contacts, experiences, skills] = await Promise.all([
     fetchAboutMe(),
     fetchContacts(),
