@@ -18,8 +18,8 @@ const formatDate = (dateString: string) => {
 
 const BlogPostHeader = memo(function BlogPostHeader({ post }: BlogPostHeaderProps) {
   return (
-    <header className="max-w-3xl mx-auto mb-12">
-      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+    <header className="max-w-3xl mx-auto my-12">
+      <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
         {post.title}
       </h1>
       
