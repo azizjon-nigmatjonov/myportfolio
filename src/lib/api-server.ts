@@ -6,6 +6,7 @@ import {
   ExperienceApiResponse, 
   SkillApiResponse 
 } from "@/types/experience";
+import { BlogApiResponse } from "@/types/blog";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -172,5 +173,56 @@ export async function fetchSkills(): Promise<SkillApiResponse[]> {
   } catch (error) {
     console.error("Error fetching skills:", error);
     return [];
+  }
+}
+
+/**
+ * Blog API functions
+ */
+
+export async function fetchBlogPosts(): Promise<BlogApiResponse[]> {
+  if (!API_BASE_URL) {
+    console.warn("NEXT_PUBLIC_API_BASE_URL is not set");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/blog/posts`, {
+      next: { revalidate: 300 }, // Revalidate every 5 minutes
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching blog posts:", error);
+    return [];
+  }
+}
+
+export async function fetchBlogPostById(idOrSlug: string): Promise<BlogApiResponse | null> {
+  if (!API_BASE_URL) {
+    console.warn("NEXT_PUBLIC_API_BASE_URL is not set");
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/blog/posts/${idOrSlug}`, {
+      next: { revalidate: 300 }, // Revalidate every 5 minutes
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null;
+      }
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching blog post:", error);
+    return null;
   }
 }

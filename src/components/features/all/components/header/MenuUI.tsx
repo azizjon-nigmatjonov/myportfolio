@@ -10,6 +10,7 @@ interface MenuUIProps {
 export default function MenuUI({ onClose, profilePicture }: MenuUIProps) {
   const menuItems = [
     { name: "Experience", href: "/experience", icon: "💼" },
+    { name: "Blog", href: "/blog", icon: "📝" },
     { name: "Telegram", href: "https://t.me/aziz_nodirovich", icon: "📱" },
     { name: "Linkedin", href: "https://linkedin.com/in/azizjon-nigmatjonov", icon: "💼" },
     { name: "Read.cv", href: "https://drive.google.com/file/d/1gZJRIGk0xwWJl1WBkiYd34Hcj_C_zmfp/view?usp=drive_link", icon: "📄" },

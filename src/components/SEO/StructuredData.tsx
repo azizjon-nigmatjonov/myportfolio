@@ -1,6 +1,7 @@
 import { Portfolio } from "@/types/portfolio";
 import { MyInfo } from "@/types/auth";
 import { ExperienceData } from "@/types/experience";
+import { BlogPost } from "@/types/blog";
 import { getCanonicalUrl, normalizeImageUrl } from "@/lib/seo";
 
 interface PersonSchemaProps {
@@ -21,6 +22,14 @@ interface ExperienceSchemaProps {
 
 interface PortfolioCollectionSchemaProps {
   portfolios: Portfolio[];
+}
+
+interface BlogCollectionSchemaProps {
+  posts: BlogPost[];
+}
+
+interface BlogPostSchemaProps {
+  post: BlogPost;
 }
 
 export function PersonSchema({ person }: PersonSchemaProps) {
@@ -273,6 +282,83 @@ export function PortfolioCollectionSchema({ portfolios }: PortfolioCollectionSch
         },
       })),
     },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function BlogCollectionSchema({ posts }: BlogCollectionSchemaProps) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Blog - Azizjon Nigmatjonov",
+    description: "Web development blog with articles about React, Next.js, TypeScript, and modern frontend technologies",
+    url: getCanonicalUrl("/blog"),
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: post.excerpt,
+      url: getCanonicalUrl(`/blog/${post.slug}`),
+      datePublished: post.publishedAt,
+      dateModified: post.updatedAt || post.publishedAt,
+      author: {
+        "@type": "Person",
+        name: post.author.name,
+        image: post.author.avatar ? normalizeImageUrl(post.author.avatar) : undefined,
+      },
+      image: post.featuredImage ? normalizeImageUrl(post.featuredImage) : undefined,
+      keywords: post.tags.join(", "),
+      articleSection: post.category,
+      wordCount: post.content.reduce((acc, block) => {
+        if (block.type === "paragraph") {
+          return acc + block.content.split(" ").length;
+        }
+        return acc;
+      }, 0),
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function BlogPostSchema({ post }: BlogPostSchemaProps) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    url: getCanonicalUrl(`/blog/${post.slug}`),
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt || post.publishedAt,
+    author: {
+      "@type": "Person",
+      name: post.author.name,
+      image: post.author.avatar ? normalizeImageUrl(post.author.avatar) : undefined,
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Azizjon Nigmatjonov",
+    },
+    image: post.featuredImage ? normalizeImageUrl(post.featuredImage) : undefined,
+    keywords: post.tags.join(", "),
+    articleSection: post.category,
+    wordCount: post.content.reduce((acc, block) => {
+      if (block.type === "paragraph") {
+        return acc + block.content.split(" ").length;
+      }
+      return acc;
+    }, 0),
+    timeRequired: `PT${post.readTime}M`,
   };
 
   return (

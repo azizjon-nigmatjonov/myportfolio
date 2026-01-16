@@ -10,6 +10,10 @@ export default function NavBar({ myInfo = {} as MyInfo }: { myInfo: MyInfo }) {
         <Link href="/experience">Experience </Link>
         <ArrowRightIcon className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-in-out" />
       </li>
+      <li className="flex items-center gap-2 group">
+        <Link href="/blog">Blog </Link>
+        <ArrowRightIcon className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-in-out" />
+      </li>
       {myInfo.github_url && <li className="flex items-center gap-2 group">
         <Link target="_blank" href={myInfo.github_url || ''}>Github </Link>
         <ArrowRightIcon className="transform rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300 ease-in-out" />
