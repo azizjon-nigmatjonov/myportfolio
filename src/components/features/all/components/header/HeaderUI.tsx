@@ -39,23 +39,26 @@ export default function HeaderUI({ myInfo = {} as MyInfo }: { myInfo: MyInfo }) 
         </div>
 
         {/* Desktop layout - 640px and above */}
-        <div className="hidden sm:grid grid-cols-4 py-5">
-          <div className="cursor-pointer" onClick={handleNavigateHome}>
-            <h1>{name}</h1>
-          </div>
-          <div>
+        <div className="hidden sm:grid grid-cols-2 py-5">
+          <div className="grid grid-cols-2">
+            <div className="cursor-pointer" onClick={handleNavigateHome}>
+              <h1>{name}</h1>
+            </div>
+
             <p>Tashkent <br /> Software Engineer</p>
           </div>
-          <NavBar myInfo={myInfo || {} as MyInfo} />
-          <div className="flex justify-end">
-            {profilePicture && <img src={profilePicture} alt="avatar" width={40} height={40} className="w-[40px] h-[40px] rounded-full object-cover" />}
+          <div className="flex justify-between">
+            <NavBar myInfo={myInfo || {} as MyInfo} />
+            <div className="flex justify-end ">
+              {profilePicture && <img src={profilePicture} alt="avatar" width={40} height={40} className="w-[40px] h-[40px] rounded-full object-cover" />}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <MenuUI 
+        <MenuUI
           onClose={handleMenuClose}
           profilePicture={profilePicture}
         />
