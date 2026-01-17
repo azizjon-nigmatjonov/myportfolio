@@ -4,6 +4,8 @@
  * - https://youtu.be/VIDEO_ID
  * - https://www.youtube.com/watch?v=VIDEO_ID
  * - https://youtube.com/watch?v=VIDEO_ID
+ * - https://www.youtube.com/shorts/VIDEO_ID
+ * - https://www.youtube.com/embed/VIDEO_ID
  */
 export function getYouTubeEmbedUrl(url: string): string | null {
   if (!url) return null;
@@ -14,6 +16,13 @@ export function getYouTubeEmbedUrl(url: string): string | null {
   // Format: https://youtu.be/VIDEO_ID or https://youtu.be/VIDEO_ID?si=...
   if (url.includes('youtu.be/')) {
     const match = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+    if (match) {
+      videoId = match[1];
+    }
+  }
+  // Format: https://www.youtube.com/shorts/VIDEO_ID
+  else if (url.includes('youtube.com/shorts/')) {
+    const match = url.match(/shorts\/([a-zA-Z0-9_-]+)/);
     if (match) {
       videoId = match[1];
     }

@@ -11,6 +11,7 @@ interface ContentBlockRendererProps {
 const ContentBlockRenderer = memo(function ContentBlockRenderer({ 
   block 
 }: ContentBlockRendererProps) {
+  
   switch (block.type) {
     case "paragraph":
       return (
