@@ -9,10 +9,10 @@ interface BlogPostHeaderProps {
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { 
-    year: "numeric", 
-    month: "long", 
-    day: "numeric" 
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
   });
 };
 
@@ -22,16 +22,18 @@ const BlogPostHeader = memo(function BlogPostHeader({ post }: BlogPostHeaderProp
       <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight">
         {post.title}
       </h1>
-      
+
       <div className="flex items-center gap-4 mb-8 text-foreground/70">
         {post.author.avatar && (
-          <Image
-            src={post.author.avatar}
-            alt={post.author.name}
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
+          <div className="w-[48px] h-[48px]">
+            <Image
+              src={post.author.avatar}
+              alt={post.author.name}
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+          </div>
         )}
         <div className="flex-1">
           <div className="font-medium text-foreground">{post.author.name}</div>
@@ -48,7 +50,7 @@ const BlogPostHeader = memo(function BlogPostHeader({ post }: BlogPostHeaderProp
           </div>
         </div>
       </div>
-      
+
       {post.tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-8">
           {post.tags.map((tag) => (
@@ -61,14 +63,14 @@ const BlogPostHeader = memo(function BlogPostHeader({ post }: BlogPostHeaderProp
           ))}
         </div>
       )}
-      
+
       {post.featuredImage && (
         <div className="relative w-full h-96 sm:h-[500px] rounded-lg overflow-hidden mb-12">
           <Image
             src={post.featuredImage}
             alt={post.title}
             fill
-            className="object-cover"
+            className="object-contain"
             sizes="(max-width: 640px) 100vw, 1200px"
             priority
           />

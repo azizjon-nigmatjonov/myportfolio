@@ -60,7 +60,7 @@ const ContentBlockRenderer = memo(function ContentBlockRenderer({
               src={block.imageUrl}
               alt={block.imageAlt || ""}
               fill
-              className="object-contain"
+              className="object-cover"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
             />
           </div>
