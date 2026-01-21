@@ -1,4 +1,4 @@
-export type ContentBlockType = "paragraph" | "heading" | "image" | "video" | "quote" | "code" | "list";
+export type ContentBlockType = "paragraph" | "heading" | "image" | "video" | "quote" | "code" | "list" | "link";
 
 export interface ContentBlock {
   id: string;
@@ -11,6 +11,9 @@ export interface ContentBlock {
   level?: number; // For headings (1-6)
   language?: string; // For code blocks
   items?: string[]; // For lists
+  linkTitle?: string; // For link blocks
+  linkUrl?: string; // For link blocks
+  linkImage?: string; // Optional image for link blocks
 }
 
 export interface BlogPost {

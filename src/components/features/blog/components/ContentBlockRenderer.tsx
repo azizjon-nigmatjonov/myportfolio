@@ -134,6 +134,42 @@ const ContentBlockRenderer = memo(function ContentBlockRenderer({
         </ul>
       );
 
+    case "link":
+      if (!block.linkUrl || !block.linkTitle) return null;
+
+      return (
+        <figure className="my-10">
+          <a
+            href={block.linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block group"
+          >
+            <div className="border border-foreground/20 rounded-lg overflow-hidden hover:border-foreground/40 transition-colors duration-200">
+              {block.linkImage && (
+                <div className="relative w-full h-48 sm:h-64 lg:h-80">
+                  <Image
+                    src={block.linkImage}
+                    alt={block.linkTitle}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 800px"
+                  />
+                </div>
+              )}
+              <div className={`p-6 ${block.linkImage ? '' : 'py-8'}`}>
+                <h3 className="text-xl sm:text-2xl font-semibold text-foreground/90 group-hover:text-foreground transition-colors duration-200">
+                  {block.linkTitle}
+                </h3>
+                <p className="text-sm text-foreground/60 mt-2 break-all">
+                  {block.linkUrl}
+                </p>
+              </div>
+            </div>
+          </a>
+        </figure>
+      );
+
     default:
       return null;
   }
