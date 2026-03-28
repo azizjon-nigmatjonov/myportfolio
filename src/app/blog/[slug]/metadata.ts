@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { BlogPost } from "@/types/blog";
-import { getCanonicalUrl, formatMetaDescription, generateKeywords, normalizeImageUrl } from "@/lib/seo";
+import {
+  getCanonicalUrl,
+  formatMetaDescription,
+  generateKeywords,
+  normalizeImageUrl,
+  normalizeWhitespaceForMeta,
+} from "@/lib/seo";
 
 export function generateBlogPostMetadata(post: BlogPost): Metadata {
-  const title = `${post.title} | Azizjon Nigmatjonov - Blog`;
-  
   // Extract meaningful content text from blog post for social media preview
   const getContentText = () => {
     // Get all paragraph blocks and extract text
@@ -25,12 +29,14 @@ export function generateBlogPostMetadata(post: BlogPost): Metadata {
     return post.excerpt;
   };
   
-  const description = formatMetaDescription(getContentText());
+  const rawSummary = normalizeWhitespaceForMeta(getContentText() || post.excerpt || post.title);
+  const description = formatMetaDescription(rawSummary, 160);
+  const socialDescription = formatMetaDescription(rawSummary, 280);
   const url = getCanonicalUrl(`/blog/${post.slug}`);
 
   const keywords = generateKeywords({
     title: post.title,
-    description: post.excerpt,
+    description: normalizeWhitespaceForMeta(post.excerpt),
     tags: post.tags || [],
     category: post.category,
   });
@@ -51,7 +57,9 @@ export function generateBlogPostMetadata(post: BlogPost): Metadata {
   const ogImage = getPrimaryImage();
 
   return {
-    title,
+    title: {
+      absolute: `${post.title} | Azizjon Nigmatjonov - Blog`,
+    },
     description,
     keywords,
     authors: [{ name: post.author.name }],
@@ -59,8 +67,9 @@ export function generateBlogPostMetadata(post: BlogPost): Metadata {
     publisher: "Azizjon Nigmatjonov",
     openGraph: {
       type: "article",
+      locale: "en_US",
       title: post.title,
-      description,
+      description: socialDescription,
       url,
       siteName: "Azizjon Nigmatjonov - Portfolio",
       images: ogImage ? [
@@ -80,7 +89,7 @@ export function generateBlogPostMetadata(post: BlogPost): Metadata {
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description,
+      description: socialDescription,
       images: ogImage ? [ogImage] : undefined,
       creator: "@azizjon7",
     },

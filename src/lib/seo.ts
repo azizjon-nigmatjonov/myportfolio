@@ -9,6 +9,15 @@ export function getCanonicalUrl(path: string = ""): string {
 }
 
 /**
+ * Collapse newlines and repeated whitespace for meta / Open Graph tags.
+ * Crawlers like LinkedIn often drop or fail to render og:description when it contains raw line breaks.
+ */
+export function normalizeWhitespaceForMeta(text: string): string {
+  if (!text) return "";
+  return text.replace(/\r\n/g, " ").replace(/\n/g, " ").replace(/\s+/g, " ").trim();
+}
+
+/**
  * Format meta description to optimal length (150-160 characters)
  */
 export function formatMetaDescription(description: string, maxLength: number = 160): string {

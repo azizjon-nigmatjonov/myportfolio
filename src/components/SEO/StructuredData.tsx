@@ -2,7 +2,7 @@ import { Portfolio } from "@/types/portfolio";
 import { MyInfo } from "@/types/auth";
 import { ExperienceData } from "@/types/experience";
 import { BlogPost } from "@/types/blog";
-import { getCanonicalUrl, normalizeImageUrl } from "@/lib/seo";
+import { getCanonicalUrl, normalizeImageUrl, normalizeWhitespaceForMeta } from "@/lib/seo";
 
 interface PersonSchemaProps {
   person: MyInfo;
@@ -302,7 +302,7 @@ export function BlogCollectionSchema({ posts }: BlogCollectionSchemaProps) {
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
-      description: post.excerpt,
+      description: normalizeWhitespaceForMeta(post.excerpt),
       url: getCanonicalUrl(`/blog/${post.slug}`),
       datePublished: post.publishedAt,
       dateModified: post.updatedAt || post.publishedAt,
@@ -315,8 +315,11 @@ export function BlogCollectionSchema({ posts }: BlogCollectionSchemaProps) {
       keywords: post.tags.join(", "),
       articleSection: post.category,
       wordCount: post.content.reduce((acc, block) => {
-        if (block.type === "paragraph") {
-          return acc + block.content.split(" ").length;
+        if (block.type === "paragraph" || block.type === "heading" || block.type === "quote") {
+          return acc + block.content.split(/\s+/).filter(Boolean).length;
+        }
+        if (block.type === "list" && block.items?.length) {
+          return acc + block.items.join(" ").split(/\s+/).filter(Boolean).length;
         }
         return acc;
       }, 0),
@@ -336,7 +339,7 @@ export function BlogPostSchema({ post }: BlogPostSchemaProps) {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
-    description: post.excerpt,
+    description: normalizeWhitespaceForMeta(post.excerpt),
     url: getCanonicalUrl(`/blog/${post.slug}`),
     datePublished: post.publishedAt,
     dateModified: post.updatedAt || post.publishedAt,
@@ -353,8 +356,11 @@ export function BlogPostSchema({ post }: BlogPostSchemaProps) {
     keywords: post.tags.join(", "),
     articleSection: post.category,
     wordCount: post.content.reduce((acc, block) => {
-      if (block.type === "paragraph") {
-        return acc + block.content.split(" ").length;
+      if (block.type === "paragraph" || block.type === "heading" || block.type === "quote") {
+        return acc + block.content.split(/\s+/).filter(Boolean).length;
+      }
+      if (block.type === "list" && block.items?.length) {
+        return acc + block.items.join(" ").split(/\s+/).filter(Boolean).length;
       }
       return acc;
     }, 0),
